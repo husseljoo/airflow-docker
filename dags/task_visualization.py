@@ -128,7 +128,7 @@ def hours_fig(df_accidents):
 
 
 def start_visualize_server(
-    path="/opt/airflow/data/", filename="accidents_cleaned_milestone2.csv", port=8050
+    path="/opt/airflow/data/", filename="accidents_cleaned_milestone2.csv", port=8055
 ):
     df_accidents = pd.read_csv(f"{path}/{filename}")
     app = Dash()
@@ -171,9 +171,7 @@ def start_visualize_server(
         ]
     )
 
-    if len(sys.argv) > 1:
-        port = sys.argv[1]
-    app.run_server(debug=False, port=port)
+    app.run_server(debug=False, port=port, host="0.0.0.0")
 
 
 def main():

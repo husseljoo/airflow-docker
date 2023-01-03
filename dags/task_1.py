@@ -157,7 +157,7 @@ def ms_1(path="/opt/airflow/data/", filename="2011_Accidents_UK.csv"):
 
     # df.to_parquet("accidents_cleaned.parquet", index=False)
     export_file(df, path, "accidents_cleaned.csv")
-    export_file(df, path, "encodings.csv")
+    export_file(encodings, path, "encodings.csv")
     export_file(df, path, "accidents_cleaned.parquet")
 
 

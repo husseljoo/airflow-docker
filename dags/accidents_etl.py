@@ -17,15 +17,16 @@ def load_to_postgres(
     port=5432,
 ):
 
-    engine = create_engine(f"postgresql://root:root@pgdatabase5:{port}/accidents_etl")
+    engine = create_engine(f"postgresql://root:root@pgdatabase:{port}/accidents")
     if engine.connect():
         print("connected succesfully")
     else:
         print("failed to connect")
+
     # "accidents_cleaned_milestone2.csv"
     df = pd.read_csv(f"{path}/{filename}")
+    df = df.head(1000)  # to make load task faster
     df.to_sql(name="UK_Accidents_2011", con=engine, if_exists="replace")
-
     # "encodings.csv"
     df = pd.read_csv(f"{path}/{lookup_table}")
     df.to_sql(name="lookup_table", con=engine, if_exists="replace")
@@ -83,7 +84,7 @@ with DAG(
         op_kwargs={
             "path": "/opt/airflow/data/",
             "filename": "accidents_cleaned_milestone2.csv",
-            "port": 8050,
+            "port": 8055,
         },
     )
 
